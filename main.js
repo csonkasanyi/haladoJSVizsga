@@ -11,7 +11,17 @@ class Project {
         this.searchField = document.getElementById('searchField');
         this.searchCarBrandBtn = document.getElementById('searchCarBrandBtn');
         this.resultTbody = document.getElementById('resultTbody');
+
+        this.requestCars();
     }
+
+    requestCars = async () => {
+        let respond = await fetch('cars.json');
+        let cars = await respond.json();
+        return cars;
+    }
+
+    
 }
 
 const projectObject = new Project();
