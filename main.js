@@ -12,8 +12,9 @@ class Project {
         this.searchCarBrandBtn = document.getElementById('searchCarBrandBtn');
         this.resultTbody = document.getElementById('resultTbody');
 
-        this.requestCars();
-        this.putCarsToTable();
+        // this.requestCars();
+        // this.putCarsToTable();
+        this.oldestCarBtn.onclick = this.findOldestCar;
     }
 
     requestCars = async () => {
@@ -36,6 +37,29 @@ class Project {
         }
         this.resultTbody.innerHTML = resultHTML;
     }
+
+    findOldestCar = async () => {
+        let cars = await this.requestCars();
+
+        let minYear = cars[0].factoryYear;
+        for (let i = 1; i < cars.length; i++) {
+            if (cars[i].facroryYear < minYear) {
+                minYear = cars[i].factoryYear;
+            }
+            
+        }
+        console.log(minYear);
+        let result = [];
+
+        for (let carData of cars) {
+            if (carData.factoryYear == minYear) {
+                result.push(carData.factoryYear)
+            }
+        }
+
+        this.putCarsToTable(result);
+    }
+
 }
 
 const projectObject = new Project();
