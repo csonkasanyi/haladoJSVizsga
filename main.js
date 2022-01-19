@@ -38,6 +38,12 @@ class Project {
         this.resultTbody.innerHTML = resultHTML;
     }
 
+    showErrorMsg = (errorMsg) => {
+        this.searchField.value = ``;
+        this.resultTbody.innerHTML = ``;
+        alert(errorMsg);
+    }
+
     findOldestCar = async () => {
         let cars = await this.requestCars();
 
@@ -92,8 +98,10 @@ class Project {
             if (result.length > 0) {
                 this.putCarsToTable(result);
             } else {
-                
+                this.showErrorMsg(`Nincs találat!`);
             }
+        } else {
+            this.showErrorMsg('A beviteli mező üres!');
         }
     }
 
