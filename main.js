@@ -12,10 +12,9 @@ class Project {
         this.searchCarBrandBtn = document.getElementById('searchCarBrandBtn');
         this.resultTbody = document.getElementById('resultTbody');
 
-        // this.requestCars();
-        // this.putCarsToTable();
         this.oldestCarBtn.onclick = this.findOldestCar;
         this.after2004Btn.onclick = this.findCarsAfter2004;
+        this.searchCarBrandBtn.onclick = this.searchForCarBrand;
     }
 
     requestCars = async () => {
@@ -46,7 +45,7 @@ class Project {
 
         let minYear = cars[0].factoryYear;
         for (let i=1; i<cars.length; i++) {
-            if (cars[i].facroryYear < minYear) {
+            if (cars[i].factoryYear < minYear) {
                 minYear = cars[i].factoryYear;
             }
             
@@ -56,7 +55,7 @@ class Project {
 
         for (let carData of cars) {
             if (carData.factoryYear == minYear) {
-                result.push(carData.factoryYear)
+                result.push(carData)
             }
         }
 
@@ -74,6 +73,28 @@ class Project {
             }
         }
         this.putCarsToTable(result);
+    }
+
+    searchForCarBrand = async () => {
+        const searchText = this.searchField.value.toLowerCase();
+
+        if (searchText.length > 0) {
+            let cars = await this.requestCars();
+
+            let result = [];
+
+            for (let carData of cars) {
+                if (carData.brand.toLowerCase() == searchText) {
+                    result.push(carData);
+                }
+            }
+
+            if (result.length > 0) {
+                this.putCarsToTable(result);
+            } else {
+                
+            }
+        }
     }
 
 }
